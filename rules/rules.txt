@@ -1,0 +1,16 @@
+Objective:
+        - Get as close to 21 without going over
+
+Values: 
+        Face cards - 10 points
+        Aces - 1 or 11 depending on values
+        Others - Value printed on the card
+
+How to play :
+        - Dealer is going to give every one two cards face up!
+        - Dealer gives himself one card facedown!
+        - Blackjack if any two face cards on first two cards - Pay him
+        - If value crosses 21 take his money! - he lost it so! - hoghey!
+        - If player hv btwn 18 and 21 - no more cards
+        - If player hv less than 18 u can hit - one card at a time
+        - Equal score andre draw!
