@@ -1,13 +1,12 @@
 from random import choice
 
-
 class Blackjack(object):
 	
 	def __init__(self):
 		super(Blackjack, self).__init__()
 		self.cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11] # Value of each card
-		
-	def __addUpCards(self,cards):
+	
+	def __addUpCards(self, cards):
 		number_of_aces = cards.count(11) # check the number of aces that the player is having
 		total = sum(cards) 
 
@@ -101,8 +100,6 @@ class Blackjack(object):
 			if carryon is not "y":
 				start = False
 
-
-
 def main():
 	print "-" * 50
 	print "A simple two player( player vs computer)"
@@ -110,7 +107,6 @@ def main():
 
 	game = Blackjack()
 	game.play()
-	
 
 if __name__ == '__main__':
 	main()
