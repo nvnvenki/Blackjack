@@ -2,6 +2,7 @@ from random import choice
 
 from deck import Deck
 from scorer import Scorer
+from player import Player
 
 class Blackjack(object):
 	
@@ -35,62 +36,55 @@ class Blackjack(object):
 		start = True
 		while start:
 			
-			player_cards = []
-			player_cards.append(self.deck.getCard())
-			player_cards.append(self.deck.getCard())
+			player = Player()
+			computer = Player()
 
-
-			player_bursted = False
-			computer_bursted = False
-
-			# palyers turn
-			player_play = True
-			if self.__isAllFaceCards(player_cards):
-				player_play = False
+			player.addCards(self.deck.getCard())
+			player.addCards(self.deck.getCard())
+		
+			if self.__isAllFaceCards(player.getCards()):
+				player.setPlayStatus(False)
 			
 			scorer = Scorer()
 
-			while player_play:
-				scorer.addPointsToPlayer(self.__addUpCards(player_cards))
-				print "Player cards: %s total: %d" % (player_cards, scorer.getTotalPlayer())
+			while player.getPlayStatus():
+				scorer.addPointsToPlayer(self.__addUpCards(player.getCards()))
+				print "Player cards: %s total: %d" % (player.getCards(), scorer.getTotalPlayer())
 
 				if scorer.isBusted('p'):
 					print "Player bursted!"
-					player_bursted = True
-					player_play = False
+					player.setBurstedStatus(True)
+					player.setPlayStatus(False)
 
 				elif scorer.isBlackjack():
 					print "Black jack!"
-					player_play = False
+					player.setPlayStatus(False)
 
 				else:
 					hit_or_stand = raw_input("hit or stand? h / s : ")
 					if hit_or_stand is "h":
-						player_cards.append(self.deck.getCard())
+						player.addCards(self.deck.getCard())
 					else:
-						player_play = False
+						player.setPlayStatus(False)
 
-			computer_play = True
-
-			while computer_play:
+			while computer.getPlayStatus():
 				# almost same
-				computer_cards = []
-				computer_cards.append(self.deck.getCard())
-				computer_cards.append(self.deck.getCard())
+				computer.addCards(self.deck.getCard())
+				computer.addCards(self.deck.getCard())
 
 				# till the computer hv 18
 				while True:
-					scorer.addPointsToComputer(self.__addUpCards(computer_cards))
+					scorer.addPointsToComputer(self.__addUpCards(computer.getCards()))
 					if scorer.getTotalComputer() <= 18 :
-						computer_cards.append(choice(computer_cards))
+						computer.addCards(self.deck.getCard())
 					else:
 						break
-				print "computer cards: %s total: %d" % (computer_cards, scorer.getTotalComputer())
+				print "computer cards: %s total: %d" % (computer.getCards(), scorer.getTotalComputer())
 
 				# who is the winner
 				if scorer.getTotalComputer() > 21:
 					print "computer bursted!"
-					if not player_bursted:
+					if not player.getBurstedStatus():
 						print "player wins!"
 					
 						
@@ -102,13 +96,13 @@ class Blackjack(object):
 					print "Draw!"
 
 				elif scorer.getTotalPlayer() > scorer.getTotalComputer():
-					if not player_bursted:
+					if not player.getBurstedStatus():
 						print "player wins!"
 
-					elif not computer_bursted:
+					elif not computer.getBurstedStatus():
 						print "computer bursted"
 
-				computer_play = False
+				computer.setPlayStatus(False)
 			carryon = raw_input("would you like to continue? y or n : ")
 			if carryon is not "y":
 				start = False
