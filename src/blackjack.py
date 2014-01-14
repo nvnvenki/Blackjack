@@ -1,14 +1,22 @@
 from random import choice
 
+from deck import Deck
+
 class Blackjack(object):
 	
 	def __init__(self):
 		super(Blackjack, self).__init__()
-		self.cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11] # Value of each card
+		self.deck = Deck()
+
+	def __getTotal(self, cards):
+		total = 0
+		for eachCard in cards:
+			total = total + eachCard[eachCard.keys()[0]]
+		return total
 	
 	def __addUpCards(self, cards):
-		number_of_aces = cards.count(11) # check the number of aces that the player is having
-		total = sum(cards) 
+		number_of_aces = cards.count({'Ace' : 11}) # check the number of aces that the player is having
+		total = self.__getTotal(cards) 
 
 		# aces value?? 1 or 11! - decision taken here also make sure that the total is maximized
 		if total > 21 and number_of_aces > 0:
@@ -18,7 +26,7 @@ class Blackjack(object):
 		return total
 
 	def __isAllFaceCards(self, cards):
-		return len(self.cards) == 2 and (cards[0] == 10 and cards[1] == 10)
+		return len(cards) == 2 and (cards[0].values()[0] == 10 and cards[1].values()[0] == 10)
 
 	def play(self):
 
@@ -26,8 +34,8 @@ class Blackjack(object):
 		start = True
 		while start:
 			player_cards = []
-			player_cards.append(choice(self.cards))
-			player_cards.append(choice(self.cards))
+			player_cards.append(self.deck.getCard())
+			player_cards.append(self.deck.getCard())
 
 			player_bursted = False
 			computer_bursted = False
@@ -53,7 +61,7 @@ class Blackjack(object):
 				else:
 					hit_or_stand = raw_input("hit or stand? h / s : ")
 					if hit_or_stand is "h":
-						player_cards.append(choice(self.cards))
+						player_cards.append(self.deck.getCard())
 					else:
 						player_play = False
 
@@ -62,8 +70,8 @@ class Blackjack(object):
 			while computer_play:
 				# almost same
 				computer_cards = []
-				computer_cards.append(choice(self.cards))
-				computer_cards.append(choice(self.cards))
+				computer_cards.append(self.deck.getCard())
+				computer_cards.append(self.deck.getCard())
 
 				# till the computer hv 18
 				while True:
