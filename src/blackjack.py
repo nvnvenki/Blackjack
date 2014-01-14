@@ -1,6 +1,7 @@
 from random import choice
 
 from deck import Deck
+from scorer import Scorer
 
 class Blackjack(object):
 	
@@ -37,9 +38,10 @@ class Blackjack(object):
 			player_cards.append(self.deck.getCard())
 			player_cards.append(self.deck.getCard())
 
+
 			player_bursted = False
 			computer_bursted = False
-
+			
 			# palyers turn
 			player_play = True
 			if self.__isAllFaceCards(player_cards):

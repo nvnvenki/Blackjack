@@ -17,10 +17,8 @@ class Deck(object):
 
 	def getCard(self):
 		if len(self.__cards) > 0:
-			# self.__shuffle()
 			card = self.__cards[0]
 			self.__cards = self.__cards[1:]
-			# self.__shuffle()
 			return card
 		else:
 			print "No more cards!"
