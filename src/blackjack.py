@@ -52,9 +52,9 @@ class Blackjack(object):
 					player_play = False
 
 				else:
-					hit_or_stand = raw_input("hit or stand? 1 / 0 ")
-					if hit_or_stand == 1:
-						player_cards.append(choice(cards))
+					hit_or_stand = raw_input("hit or stand? h / s : ")
+					if hit_or_stand is "h":
+						player_cards.append(choice(self.cards))
 					else:
 						player_play = False
 
@@ -97,6 +97,10 @@ class Blackjack(object):
 						print "computer bursted"
 
 				computer_play = False
+			carryon = raw_input("would you like to continue? y or n : ")
+			if carryon is not "y":
+				start = False
+
 
 
 def main():
