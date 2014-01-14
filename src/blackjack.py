@@ -34,6 +34,7 @@ class Blackjack(object):
 		# cards may be unlimited - 4 suits in a deck
 		start = True
 		while start:
+			
 			player_cards = []
 			player_cards.append(self.deck.getCard())
 			player_cards.append(self.deck.getCard())
@@ -41,22 +42,24 @@ class Blackjack(object):
 
 			player_bursted = False
 			computer_bursted = False
-			
+
 			# palyers turn
 			player_play = True
 			if self.__isAllFaceCards(player_cards):
 				player_play = False
+			
+			scorer = Scorer()
 
 			while player_play:
-				total_player = self.__addUpCards(player_cards)
-				print "Player cards: %s total: %d" % (player_cards, total_player)
+				scorer.addPointsToPlayer(self.__addUpCards(player_cards))
+				print "Player cards: %s total: %d" % (player_cards, scorer.getTotalPlayer())
 
-				if total_player > 21:
+				if scorer.isBusted('p'):
 					print "Player bursted!"
 					player_bursted = True
 					player_play = False
 
-				elif total_player == 21:
+				elif scorer.isBlackjack():
 					print "Black jack!"
 					player_play = False
 
@@ -77,28 +80,28 @@ class Blackjack(object):
 
 				# till the computer hv 18
 				while True:
-					total_computer = self.__addUpCards(computer_cards)
-					if total_computer <= 18 :
+					scorer.addPointsToComputer(self.__addUpCards(computer_cards))
+					if scorer.getTotalComputer() <= 18 :
 						computer_cards.append(choice(computer_cards))
 					else:
 						break
-				print "computer cards: %s total: %d" % (computer_cards, total_computer)
+				print "computer cards: %s total: %d" % (computer_cards, scorer.getTotalComputer())
 
 				# who is the winner
-				if total_computer > 21:
+				if scorer.getTotalComputer() > 21:
 					print "computer bursted!"
 					if not player_bursted:
 						print "player wins!"
 					
 						
-				elif total_computer > total_player:
+				elif scorer.getTotalComputer() > scorer.getTotalPlayer():
 					print "computer wins!"
 					
 
-				elif total_computer == total_player:
+				elif scorer.getTotalComputer() == scorer.getTotalPlayer():
 					print "Draw!"
 
-				elif total_player > total_computer:
+				elif scorer.getTotalPlayer() > scorer.getTotalComputer():
 					if not player_bursted:
 						print "player wins!"
 

@@ -1,28 +1,38 @@
-
 class Scorer(object):
-	def __init__(self, player):
+	def __init__(self):
 		super(Scorer, self).__init__()
-		self.player = player
+		self.total_player = 0
+		self.total_computer = 0
 	
-	def __getTotal(self, cards):
-		total = 0
-		for eachCard in cards:
-			total = total + eachCard[eachCard.keys()[0]]
-		return total
-	
-	def __addUpCards(self, cards):
-		number_of_aces = cards.count({'Ace' : 11}) # check the number of aces that the player is having
-		total = self.__getTotal(cards) 
+	def addPointsToPlayer(self, points):
+		self.total_player = points
 
-		# aces value?? 1 or 11! - decision taken here also make sure that the total is maximized
-		if total > 21 and number_of_aces > 0:
-			while number_of_aces > 0 and total > 21:
-				total = total - 10
-				number_of_aces = number_of_aces - 1
-		return total
+	def addPointsToComputer(self, points):
+		self.total_computer = points
 
-	def __isAllFaceCards(self, cards):
-		return len(cards) == 2 and (cards[0].values()[0] == 10 and cards[1].values()[0] == 10)
+	def isBusted(self, who):
+		if who is "c":
+			if self.total_computer > 21:
+				return True
+			else:
+				return False
+
+		elif who is "p":
+			if self.total_player > 21:
+				return True
+			else:
+				return False
+
+	def isBlackjack(self):
+		return self.total_player == 21
+
+	def getTotalComputer(self):
+		return self.total_computer
+
+	def getTotalPlayer(self):
+		return self.total_player
+
+
 
 
 
