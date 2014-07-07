@@ -4,4 +4,4 @@ Blackjack
 
 <h3>To Run</h3>
 
-<blockquote>$python blackjack.py</blockquote>
+<blockquote><code>$python blackjack.py</code></blockquote>
